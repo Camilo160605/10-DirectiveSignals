@@ -32,8 +32,15 @@ export class UserInfoPageComponent implements OnInit {
     this.currentUser.set(undefined);
 
     this.usersService.getUserById( id )
-    .subscribe( user => {
-      this.currentUser.set( user )
+    .subscribe({
+      next: (user) => {
+        this.currentUser.set(user);
+        this.userWasFound.set(true);
+      },
+      error: ()=>{
+        this.userWasFound.set(false);
+        this.currentUser.set(undefined);
+      },
     })
 
   }
